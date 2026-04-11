@@ -7,6 +7,7 @@ public partial class StartupWindow : Window
     public StartupWindow()
     {
         InitializeComponent();
+        Loaded += (s, e) => WindowStateManager.RegisterWindow(this);
     }
 
     private void btnStartAirDuct_Click(object sender, RoutedEventArgs e)

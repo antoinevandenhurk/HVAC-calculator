@@ -8,6 +8,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        Loaded += (s, e) => WindowStateManager.RegisterWindow(this);
     }
 
     private void TextBox_GotFocus(object sender, RoutedEventArgs e)
