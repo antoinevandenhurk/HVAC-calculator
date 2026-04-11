@@ -14,6 +14,7 @@ public partial class TapwaterWindow : Window
         InitializeComponent();
         Loaded += (s, e) =>
         {
+            WindowStateManager.RegisterWindow(this);
             if (Owner != null)
             {
                 Left = Owner.Left + (Owner.ActualWidth - ActualWidth) / 2;
