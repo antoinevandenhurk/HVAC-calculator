@@ -1,8 +1,8 @@
-﻿using System.Configuration;
+﻿﻿using System.Configuration;
 using System.Data;
 using System.Windows;
 
-namespace LuchtkanaalCalculator;
+namespace HVACCalculator;
 
 /// <summary>
 /// Interactielogica voor App.xaml
@@ -10,4 +10,3 @@ namespace LuchtkanaalCalculator;
 public partial class App : Application
 {
 }
-

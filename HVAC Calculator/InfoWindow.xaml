@@ -1,18 +1,21 @@
-<Window x:Class="LuchtkanaalCalculator.InfoWindow"
+<Window x:Class="HVACCalculator.InfoWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Informatie" Height="250" Width="350" 
-        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" 
+        WindowStartupLocation="Manual" ResizeMode="NoResize" 
         Background="#FF002262" Topmost="True" ShowInTaskbar="False" Icon="/Resources/VA.ico">
     
-    <StackPanel Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="Digitale Luchtschijf" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+    <StackPanel Margin="15,20,15,15" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <TextBlock Text="HVAC calculator" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
         <TextBlock Text="Versie 2026.1" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,2"/>
-        
-        <TextBlock Text="Berekeningen gebaseerd op:" Foreground="#FFCCCCCC" HorizontalAlignment="Center" Margin="0,5,0,0"/>
-        <TextBlock Text="Q = v * A * 3600" Foreground="Yellow" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-        
-        <TextBlock Text="Applicatie gemaakt door AvdH©2026, buy me a coffee" Foreground="White" HorizontalAlignment="Center" Margin="0,5,0,10" TextWrapping="Wrap" TextAlignment="Center"/>
+
+        <TextBlock Margin="0,8,0,2" HorizontalAlignment="Center">
+            <Hyperlink NavigateUri="https://github.com/antoinevandenhurk" RequestNavigate="Hyperlink_RequestNavigate">
+                <Run Text="Andere projecten..." Foreground="White"/>
+            </Hyperlink>
+        </TextBlock>
+
+        <TextBlock Text="All right reserved by AvdH©2026, buy me a coffee" Foreground="White" HorizontalAlignment="Center" Margin="0,5,0,10" TextWrapping="Wrap" TextAlignment="Center"/>
 
         <Button Click="btnKofi_Click" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Support me on Ko-fi">
             <Button.Template>

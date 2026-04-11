@@ -1,0 +1,157 @@
+<Window x:Class="HVACCalculator.TapwaterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Tapwater Calculator - Versie 2026.1" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="Manual" ResizeMode="NoResize" Topmost="True" Icon="/Resources/VA.ico">
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="HeaderStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5,20,5,2"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Background" Value="#FF0264C9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="MinWidth" Value="100"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="MinWidth" Value="180"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Vertical">
+            <TextBlock Text="Tapwater Calculator" Style="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+
+            <Expander Header="Leidingmateriaal kiezen" Margin="0,0,0,8" Foreground="White" HorizontalAlignment="Stretch">
+                <StackPanel Margin="8,4,8,6">
+                    <ComboBox x:Name="cbLeidingMateriaal" SelectionChanged="cbLeidingMateriaal_SelectionChanged" SelectedIndex="3">
+                        <ComboBoxItem Content="Dikwandige CV buis"/>
+                        <ComboBoxItem Content="Dunwandige CV buis"/>
+                        <ComboBoxItem Content="Henco buis"/>
+                        <ComboBoxItem Content="Koperen buis"/>
+                        <ComboBoxItem Content="PE SDR11 buis"/>
+                    </ComboBox>
+                </StackPanel>
+            </Expander>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Som Tapeenheden (TE)" Style="{StaticResource LabelStyle}" Width="200"/>
+                <TextBox x:Name="i3_1" TabIndex="1"/>
+                <TextBlock Text=" eenheden " Style="{StaticResource LabelStyle}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Som Spoeleenheden (SE)" Style="{StaticResource LabelStyle}" Width="200"/>
+                <TextBox x:Name="i3_2" TabIndex="2" Text="0"/>
+                <TextBlock Text=" eenheden " Style="{StaticResource LabelStyle}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Continu verbruik (Qcv)" Style="{StaticResource LabelStyle}" Width="200"/>
+                <TextBox x:Name="i3_3" TabIndex="3" Text="0"/>
+                <TextBlock Text=" l/s " Style="{StaticResource LabelStyle}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Aantal Brandslanghaspel (BSH)" Style="{StaticResource LabelStyle}" Width="200"/>
+                <TextBox x:Name="i3_4" TabIndex="4" Text="0"/>
+                <TextBlock Text=" stuks " Style="{StaticResource LabelStyle}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,15">
+                <TextBlock Text="Berekende volumestroom (Qv)" Style="{StaticResource LabelStyle}" Width="200"/>
+                <TextBox x:Name="i3_5" IsReadOnly="True" Background="#FF333333"/>
+                <TextBlock Text=" l/s " Style="{StaticResource LabelStyle}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical">
+            <Button Content="Bereken" Click="btnBereken_Click" TabIndex="5"/>
+            <Button Content="Wissen" Click="btnWissen_Click" TabIndex="6" Margin="5,2"/>
+            <Button Content="Afsluiten" Click="btnAfsluiten_Click" TabIndex="7" Margin="5,2"/>
+            <Button Content="Info" Click="btnInfo_Click" TabIndex="8" Margin="5,2"/>
+        </StackPanel>
+        <!-- Leidingselectietabel -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,15,0,0">
+            <TextBlock x:Name="pipeTableTitle" Text="Leidingselectie" Foreground="White" FontWeight="SemiBold" Margin="0,0,0,5"/>
+            <DataGrid x:Name="pipeGrid"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      RowHeaderWidth="0"
+                      Background="#FF001A4D"
+                      RowBackground="#FF001A4D"
+                      AlternatingRowBackground="#FF002262"
+                      Foreground="White"
+                      BorderBrush="#FF0264C9"
+                      BorderThickness="1"
+                      HorizontalScrollBarVisibility="Disabled"
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False"
+                      CanUserSortColumns="False">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#FF0264C9"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="6,4"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsAanbevolen}" Value="True">
+                                <Setter Property="Background" Value="#FF1A6B2F"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="6,3"/>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Omschrijving"    Binding="{Binding Omschrijving}"      Width="220"/>
+                    <DataGridTextColumn Header="Buismaat"         Binding="{Binding Buitendiameter}"   Width="80"/>
+                    <DataGridTextColumn Header="Wanddikte [mm]"   Binding="{Binding Wanddikte}"        Width="120" Visibility="Collapsed"/>
+                    <DataGridTextColumn Header="inw. maat"        Binding="{Binding InwendigeDiameter}" Width="80"/>
+                    <DataGridTextColumn Header="Snelheid [m/s]"   Binding="{Binding Snelheid}"         Width="110"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

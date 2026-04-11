@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuchtkanaalCalculator", "LuchtkanaalCalculator\LuchtkanaalCalculator.csproj", "{A8E599C6-30D8-360D-6E06-36DB585C502C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HVAC Calculator", "HVAC Calculator\HVAC Calculator.csproj", "{8955DD6B-BDFE-125D-3375-F374252B1F62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,15 +10,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A8E599C6-30D8-360D-6E06-36DB585C502C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8E599C6-30D8-360D-6E06-36DB585C502C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8E599C6-30D8-360D-6E06-36DB585C502C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8E599C6-30D8-360D-6E06-36DB585C502C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8955DD6B-BDFE-125D-3375-F374252B1F62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8955DD6B-BDFE-125D-3375-F374252B1F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8955DD6B-BDFE-125D-3375-F374252B1F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8955DD6B-BDFE-125D-3375-F374252B1F62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8FB549DB-993D-48A5-800A-796129A57C98}
+		SolutionGuid = {59A2B6DD-F5A1-4A60-BA3F-E9DB4C6278C8}
 	EndGlobalSection
 EndGlobal
