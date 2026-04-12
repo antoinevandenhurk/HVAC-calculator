@@ -10,6 +10,18 @@ public partial class StartupWindow : Window
         Loaded += (s, e) => WindowStateManager.RegisterWindow(this);
     }
 
+    private void btnSettings_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new SettingsWindow { Owner = this };
+        win.ShowDialog();
+    }
+
+    private void btnInfo_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new InfoWindow { Owner = this };
+        win.ShowDialog();
+    }
+
     private void btnStartAirDuct_Click(object sender, RoutedEventArgs e)
     {
         var win = new AirDuctWindow();

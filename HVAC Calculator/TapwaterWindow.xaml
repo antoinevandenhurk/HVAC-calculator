@@ -150,6 +150,7 @@
                     <DataGridTextColumn Header="Wanddikte [mm]"   Binding="{Binding Wanddikte}"        Width="120" Visibility="Collapsed"/>
                     <DataGridTextColumn Header="inw. maat"        Binding="{Binding InwendigeDiameter}" Width="80"/>
                     <DataGridTextColumn Header="Snelheid [m/s]"   Binding="{Binding Snelheid}"         Width="110"/>
+                    <DataGridTextColumn Header="Lin Δp [Pa/m]" Binding="{Binding Weerstandswaarde}" Width="150"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

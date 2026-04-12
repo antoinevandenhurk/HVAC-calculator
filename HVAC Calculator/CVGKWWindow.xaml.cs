@@ -161,7 +161,7 @@ public partial class CVGKWWindow : Window
 
     private List<CopperPipe> GetSelectedPipes()
     {
-        string material = (cbLeidingMateriaal.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
+        string material = GetSelectedMaterialName();
 
         return material switch
         {
@@ -174,15 +174,58 @@ public partial class CVGKWWindow : Window
         };
     }
 
+    private string GetSelectedMaterialName()
+    {
+        return (cbLeidingMateriaal.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
+    }
+
+    private double GetFluidTemperatureC()
+    {
+        bool hasTheta2 = TryGetDouble(i2_5.Text, out double theta2);
+        bool hasTheta3 = TryGetDouble(i2_6.Text, out double theta3);
+
+        if (hasTheta2 && hasTheta3)
+        {
+            return (theta2 + theta3) / 2.0;
+        }
+
+        if (hasTheta2) return theta2;
+        if (hasTheta3) return theta3;
+
+        return 20.0;
+    }
+
     private void UpdatePipeSuggestion(double qv)
     {
         var pipes = GetSelectedPipes();
-        const double minVelocity = 0.8;
-        const double maxVelocity = 2.0;
+        double minVelocity = AppSettings.MinVelocityCvgkw;
+        double maxVelocity = AppSettings.MaxVelocityCvgkw;
+        string material = GetSelectedMaterialName();
+        double roughnessMm = CopperPipe.GetRoughnessMm(material);
+        double fluidTemperatureC = GetFluidTemperatureC();
+        double density = CopperPipe.GetWaterDensity(fluidTemperatureC);
+        double kinematicViscosity = CopperPipe.GetWaterKinematicViscosity(fluidTemperatureC);
+        const double minResistanceBand = 150.0;
+        const double maxResistanceBand = 200.0;
 
-        var filtered = pipes
-            .Select(p => new { Pipe = p, Velocity = p.Velocity(qv) })
-            .Where(x => x.Velocity >= minVelocity && x.Velocity <= maxVelocity)
+        var evaluated = pipes
+            .Select(p =>
+            {
+                double velocity = p.Velocity(qv);
+                double resistance = p.ResistanceFromFlow(qv, roughnessMm, density, kinematicViscosity);
+                return new { Pipe = p, Velocity = velocity, Resistance = resistance };
+            })
+            .ToList();
+
+        var resistanceBandCandidate = evaluated
+            .Where(x => x.Resistance >= minResistanceBand && x.Resistance <= maxResistanceBand)
+            .OrderByDescending(x => x.Resistance)
+            .FirstOrDefault();
+
+        var filtered = evaluated
+            .Where(x =>
+                (x.Velocity >= minVelocity && x.Velocity <= maxVelocity) ||
+                (resistanceBandCandidate != null && x.Pipe == resistanceBandCandidate.Pipe))
             .ToList();
 
         // Aanbevolen = kleinste buis waarbij snelheid ≤ 1,0 m/s
@@ -192,6 +235,7 @@ public partial class CVGKWWindow : Window
         {
             var p = x.Pipe;
             double v = x.Velocity;
+            double weerstand = x.Resistance;
             bool isAanbevolen = p == aanbevolen;
             return new PipeTableRow
             {
@@ -200,6 +244,7 @@ public partial class CVGKWWindow : Window
                 Wanddikte         = p.WallThickness.ToString("0.#"),
                 InwendigeDiameter = p.InnerDiameter.ToString("0.#"),
                 Snelheid          = v.ToString("0.00"),
+                Weerstandswaarde = weerstand.ToString("0.0"),
                 IsAanbevolen      = isAanbevolen
             };
         }).ToList();
@@ -210,6 +255,7 @@ public partial class CVGKWWindow : Window
     private void InitPipeTable()
     {
         var pipes = GetSelectedPipes();
+
         pipeGrid.ItemsSource = pipes.Select(p => new PipeTableRow
         {
             Omschrijving      = string.IsNullOrEmpty(p.Omschrijving) ? p.Name : p.Omschrijving,
@@ -217,6 +263,7 @@ public partial class CVGKWWindow : Window
             Wanddikte         = p.WallThickness.ToString("0.#"),
             InwendigeDiameter = p.InnerDiameter.ToString("0.#"),
             Snelheid          = "",
+            Weerstandswaarde = "",
             IsAanbevolen      = false
         }).ToList();
     }
@@ -245,5 +292,6 @@ public class PipeTableRow
     public string Wanddikte         { get; set; } = "";
     public string InwendigeDiameter { get; set; } = "";
     public string Snelheid          { get; set; } = "";
+    public string Weerstandswaarde { get; set; } = "";
     public bool   IsAanbevolen      { get; set; }
 }

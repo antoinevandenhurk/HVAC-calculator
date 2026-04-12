@@ -26,6 +26,118 @@ public class CopperPipe
         return area > 0 ? (qv / 3600.0) / area : 0;
     }
 
+    // Max lineair drukverlies (Pa/m) volgens Darcy-Weisbach + Colebrook-White.
+    public double MaxLinearPressureLoss(double velocity, double roughnessMm, double density, double kinematicViscosity)
+    {
+        double d = InnerDiameter / 1000.0; // m
+        if (d <= 0 || velocity <= 0 || density <= 0 || kinematicViscosity <= 0) return 0;
+
+        double reynolds = (velocity * d) / kinematicViscosity;
+        if (reynolds <= 0) return 0;
+
+        double relativeRoughness = (roughnessMm / 1000.0) / d;
+        double lambda = GetDarcyFrictionFactor(reynolds, relativeRoughness);
+
+        // Darcy-Weisbach per meter: dp/L = lambda * (rho * v^2) / (2 * D)
+        return lambda * (density * velocity * velocity) / (2.0 * d);
+    }
+
+    // Weerstandswaarde in Pa/m volgens R = f * rho * 8Q^2 / (pi^2 * D^5)
+    // met Q in m3/s en D in m.
+    public double ResistanceFromFlow(double qvM3PerHour, double roughnessMm, double density, double kinematicViscosity)
+    {
+        double d = InnerDiameter / 1000.0; // m
+        if (d <= 0 || qvM3PerHour <= 0 || density <= 0 || kinematicViscosity <= 0) return 0;
+
+        double q = qvM3PerHour / 3600.0; // m3/s
+        double v = (4.0 * q) / (Math.PI * d * d);
+        double reynolds = (v * d) / kinematicViscosity;
+        if (reynolds <= 0) return 0;
+
+        double relativeRoughness = (roughnessMm / 1000.0) / d;
+        double f = GetDarcyFrictionFactor(reynolds, relativeRoughness);
+
+        return f * density * (8.0 * q * q) / (Math.PI * Math.PI * Math.Pow(d, 5));
+    }
+
+    private static double GetDarcyFrictionFactor(double reynolds, double relativeRoughness)
+    {
+        if (reynolds < 2300.0)
+        {
+            return 64.0 / reynolds;
+        }
+
+        // Swamee-Jain als startwaarde voor de Colebrook-White iteratie.
+        double lambda = 0.25 / Math.Pow(Math.Log10((relativeRoughness / 3.7) + (5.74 / Math.Pow(reynolds, 0.9))), 2);
+
+        for (int i = 0; i < 20; i++)
+        {
+            double invSqrtLambda = -2.0 * Math.Log10((relativeRoughness / 3.7) + (2.51 / (reynolds * Math.Sqrt(lambda))));
+            double updated = 1.0 / (invSqrtLambda * invSqrtLambda);
+
+            if (Math.Abs(updated - lambda) < 1e-8)
+            {
+                return updated;
+            }
+
+            lambda = updated;
+        }
+
+        return lambda;
+    }
+
+    public static double GetRoughnessMm(string materialName)
+    {
+        return materialName switch
+        {
+            "Koperen buis" => 0.0015,
+            "Henco buis" => 0.007,
+            "PE SDR11 buis" => 0.007,
+            "Dunwandige CV buis" => 0.045,
+            "Dikwandige CV buis" => 0.15,
+            _ => 0.045
+        };
+    }
+
+    public static double GetWaterDensity(double temperatureC)
+    {
+        double t = Math.Clamp(temperatureC, 0.0, 100.0);
+        return 1000.0 * (1.0 - ((t + 288.9414) / (508929.2 * (t + 68.12963))) * Math.Pow(t - 3.9863, 2));
+    }
+
+    public static double GetWaterKinematicViscosity(double temperatureC)
+    {
+        double t = Math.Clamp(temperatureC, 0.0, 100.0);
+        double mu = 2.414e-5 * Math.Pow(10.0, 247.8 / (t + 133.15)); // Pa.s
+        double rho = GetWaterDensity(t); // kg/m3
+        return mu / rho; // m2/s
+    }
+
+    // Grafiekbenadering: basis voor normale gaspijp met materiaalfactor.
+    public double GraphReadPressureLoss(double qv, string materialName, double density, double kinematicViscosity)
+    {
+        double velocity = Velocity(qv);
+        if (velocity <= 0) return 0;
+
+        const double normalGasPipeRoughnessMm = 0.045;
+        double baseLoss = MaxLinearPressureLoss(velocity, normalGasPipeRoughnessMm, density, kinematicViscosity);
+        double factor = GetGraphMultiplier(materialName);
+        return baseLoss * factor;
+    }
+
+    public static double GetGraphMultiplier(string materialName)
+    {
+        return materialName switch
+        {
+            "Koperen buis" => 0.9,
+            "Henco buis" => 0.85,
+            "PE SDR11 buis" => 0.85,
+            "Dunwandige CV buis" => 1.0,
+            "Dikwandige CV buis" => 1.0,
+            _ => 1.0
+        };
+    }
+
     // Tabel volgens screenshot van gebruiker (buitendiameter/wanddikte)
     public static List<CopperPipe> GetStandardSizes() =>
     [

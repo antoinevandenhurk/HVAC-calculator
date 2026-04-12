@@ -106,7 +106,7 @@ public partial class TapwaterWindow : Window
 
     private List<CopperPipe> GetSelectedPipes()
     {
-        string material = (cbLeidingMateriaal.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
+        string material = GetSelectedMaterialName();
         return material switch
         {
             "Koperen buis"       => CopperPipe.GetStandardSizes(),
@@ -118,11 +118,27 @@ public partial class TapwaterWindow : Window
         };
     }
 
+    private string GetSelectedMaterialName()
+    {
+        return (cbLeidingMateriaal.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "";
+    }
+
+    private static double GetFluidTemperatureC()
+    {
+        // Tapwater module heeft geen expliciete temperatuurinvoer; standaard ontwerpwaarde.
+        return 10.0;
+    }
+
     private void UpdatePipeSuggestion(double qv)
     {
         var pipes = GetSelectedPipes();
-        const double minVelocity = 0.8;
-        const double maxVelocity = 2.0;
+        double minVelocity = AppSettings.MinVelocityTapwater;
+        double maxVelocity = AppSettings.MaxVelocityTapwater;
+        string material = GetSelectedMaterialName();
+        double roughnessMm = CopperPipe.GetRoughnessMm(material);
+        double fluidTemperatureC = GetFluidTemperatureC();
+        double density = CopperPipe.GetWaterDensity(fluidTemperatureC);
+        double kinematicViscosity = CopperPipe.GetWaterKinematicViscosity(fluidTemperatureC);
 
         var filtered = pipes
             .Select(p => new { Pipe = p, Velocity = p.Velocity(qv) })
@@ -135,6 +151,7 @@ public partial class TapwaterWindow : Window
         {
             var p = x.Pipe;
             double v = x.Velocity;
+            double weerstand = p.ResistanceFromFlow(qv, roughnessMm, density, kinematicViscosity);
             return new PipeTableRow
             {
                 Omschrijving      = string.IsNullOrEmpty(p.Omschrijving) ? p.Name : p.Omschrijving,
@@ -142,6 +159,7 @@ public partial class TapwaterWindow : Window
                 Wanddikte         = p.WallThickness.ToString("0.#"),
                 InwendigeDiameter = p.InnerDiameter.ToString("0.#"),
                 Snelheid          = v.ToString("0.00"),
+                Weerstandswaarde = weerstand.ToString("0.0"),
                 IsAanbevolen      = p == aanbevolen
             };
         }).ToList();
@@ -150,6 +168,7 @@ public partial class TapwaterWindow : Window
     private void InitPipeTable()
     {
         var pipes = GetSelectedPipes();
+
         pipeGrid.ItemsSource = pipes.Select(p => new PipeTableRow
         {
             Omschrijving      = string.IsNullOrEmpty(p.Omschrijving) ? p.Name : p.Omschrijving,
@@ -157,6 +176,7 @@ public partial class TapwaterWindow : Window
             Wanddikte         = p.WallThickness.ToString("0.#"),
             InwendigeDiameter = p.InnerDiameter.ToString("0.#"),
             Snelheid          = "",
+            Weerstandswaarde = "",
             IsAanbevolen      = false
         }).ToList();
     }

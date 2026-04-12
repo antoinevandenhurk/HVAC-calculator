@@ -20,6 +20,40 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="MinWidth" Value="100"/>
         </Style>
+        <Style x:Key="GearButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="34"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="MinWidth" Value="34"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF0264C9"/>
+            <Setter Property="BorderBrush" Value="#FF1D8BF0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse x:Name="circle"
+                                     Fill="{TemplateBinding Background}"
+                                     Stroke="{TemplateBinding BorderBrush}"
+                                     StrokeThickness="{TemplateBinding BorderThickness}"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="circle" Property="Fill" Value="#FF1D8BF0"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="circle" Property="Fill" Value="#FF014B98"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style TargetType="StackPanel" x:Key="CalculatorItemStyle">
             <Setter Property="Orientation" Value="Horizontal"/>
             <Setter Property="Margin" Value="20,10"/>
@@ -33,22 +67,32 @@
         </Style>
     </Window.Resources>
     
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30">
-        <TextBlock Text="Selecteer een calculator" Style="{StaticResource HeaderStyle}"/>
-        
-        <StackPanel Style="{StaticResource CalculatorItemStyle}">
-            <TextBlock Text="Luchtkanaal calculator" Style="{StaticResource CalculatorNameStyle}"/>
-            <Button Content="Start" Click="btnStartAirDuct_Click"/>
+<Grid>
+        <!-- Info en instellingen knoppen rechtsbovenaan -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,8,8,0">
+            <Button Content="i" Click="btnInfo_Click" Style="{StaticResource GearButtonStyle}" Margin="0,0,6,0" ToolTip="Informatie"/>
+            <Button Content="⚙" Click="btnSettings_Click" Style="{StaticResource GearButtonStyle}" ToolTip="Instellingen"/>
         </StackPanel>
-        
-        <StackPanel Style="{StaticResource CalculatorItemStyle}">
-            <TextBlock Text="CV / GKW buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
-            <Button Content="Start" Click="btnStartCVGKW_Click"/>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30">
+            <TextBlock Text="Selecteer een calculator" Style="{StaticResource HeaderStyle}"/>
+
+            <StackPanel Style="{StaticResource CalculatorItemStyle}">
+                <TextBlock Text="Luchtkanaal calculator" Style="{StaticResource CalculatorNameStyle}"/>
+                <Button Content="Start" Click="btnStartAirDuct_Click"/>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource CalculatorItemStyle}">
+                <TextBlock Text="CV / GKW buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
+                <Button Content="Start" Click="btnStartCVGKW_Click"/>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource CalculatorItemStyle}">
+                <TextBlock Text="Tapwater buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
+                <Button Content="Start" Click="btnStartTapwater_Click"/>
+            </StackPanel>
         </StackPanel>
-        
-        <StackPanel Style="{StaticResource CalculatorItemStyle}">
-            <TextBlock Text="Tapwater buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
-            <Button Content="Start" Click="btnStartTapwater_Click"/>
-        </StackPanel>
-    </StackPanel>
+    </Grid>
 </Window>
+
+
