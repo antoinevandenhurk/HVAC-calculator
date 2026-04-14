@@ -42,4 +42,11 @@ public partial class StartupWindow : Window
         win.Owner = this;
         win.Show();
     }
+
+    private void btnStartMengwater_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new MengwaterWindow();
+        win.Owner = this;
+        win.Show();
+    }
 }
