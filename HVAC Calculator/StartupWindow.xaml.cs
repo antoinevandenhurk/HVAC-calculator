@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 
 namespace HVACCalculator;
 
@@ -49,4 +49,11 @@ public partial class StartupWindow : Window
         win.Owner = this;
         win.Show();
     }
+    private void btnStartGebruikersModulen_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new GebruikersModulesWindow();
+        win.Owner = this;
+        win.Show();
+    }
 }
+

@@ -15,6 +15,9 @@
   <ItemGroup>
     <Resource Include="Resources\VA.ico" />
     <Resource Include="Resources\ko-fi.png" />
+    <Resource Include="Resources\isso_mod5.png" />
+    <Resource Include="Resources\isso_mod6.png" />
+    <Resource Include="Resources\isso_mod7.png" />
   </ItemGroup>
 
 </Project>

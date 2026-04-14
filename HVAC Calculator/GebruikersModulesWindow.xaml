@@ -1,0 +1,168 @@
+<Window x:Class="HVACCalculator.GebruikersModulesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gebruikers modulen - Versie 2026.1" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="Manual" ResizeMode="CanMinimize" Topmost="True" Icon="/Resources/VA.ico">
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="HeaderStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5,20,5,2"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Background" Value="#FF0264C9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="MinWidth" Value="100"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="MinWidth" Value="220"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Linkerkant: Module selector en afbeelding -->
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Margin="0,0,15,0">
+            <TextBlock Text="Gebruikers modulen" Style="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Margin="0,0,0,12"/>
+
+            <Expander Header="Module kiezen" Margin="0,0,0,12" Foreground="White" HorizontalAlignment="Stretch" IsExpanded="True" MinWidth="200">
+                <StackPanel Margin="8,4,8,6">
+                    <ComboBox x:Name="cbGebruikersModule" SelectionChanged="cbGebruikersModule_SelectionChanged" SelectedIndex="0">
+                        <ComboBoxItem Content="ISSO module 5"/>
+                        <ComboBoxItem Content="ISSO module 6"/>
+                        <ComboBoxItem Content="ISSO module 7"/>
+                    </ComboBox>
+                </StackPanel>
+            </Expander>
+
+            <Border Background="#1FFFFFFF" BorderBrush="#50FFFFFF" BorderThickness="1" CornerRadius="4" Padding="8" Margin="0,0,0,0">
+                <Image x:Name="moduleImage" Width="140" Height="340" Stretch="Uniform"/>
+            </Border>
+        </StackPanel>
+
+        <!-- Rechterkant: Invoervelden georganiseerd in secties -->
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+            
+            <!-- INGANG INVOERVELDEN SECTIE -->
+            <TextBlock Text="Invoer" Style="{StaticResource HeaderStyle}" Margin="0,0,0,8" Foreground="White"/>
+            
+            <!-- Thermische vermogen (Φ) -->
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Thermisch vermogen" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="Φ" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_1" TabIndex="1" Width="80"/>
+                <TextBlock Text="kW" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <!-- Temperaturen -->
+            <TextBlock Text="Temperaturen" Style="{StaticResource LabelStyle}" Margin="0,10,0,3" Foreground="#FF0264C9"/>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Ingang bypass" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="θ1" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_5" TabIndex="2" Width="80"/>
+                <TextBlock Text="°C" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Ingang hoofdlijn" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="θ2" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_6" TabIndex="3" Width="80"/>
+                <TextBlock Text="°C" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Uitgang hoofdlijn" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="θ3" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_7" TabIndex="4" Width="80"/>
+                <TextBlock Text="°C" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Uitgang systeem" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="θ4" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_8" TabIndex="5" Width="80" IsReadOnly="True" Background="#1F333333"/>
+                <TextBlock Text="°C" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <!-- Fluidconstanten -->
+            <TextBlock Text="Fluidconstanten" Style="{StaticResource LabelStyle}" Margin="0,10,0,3" Foreground="#FF0264C9"/>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Soortelijke massa" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="ρw" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_9" TabIndex="6" Width="80" Text="981"/>
+                <TextBlock Text="kg/m³" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Soortelijke warmte" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="cw" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_10" TabIndex="7" Width="80" Text="4,19"/>
+                <TextBlock Text="kJ/kg·K" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Rechterkant: Berekeningsresultaten -->
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" Margin="0,15,0,0">
+            
+            <!-- BEREKENINGSRESULTATEN SECTIE -->
+            <TextBlock Text="Berekend" Style="{StaticResource HeaderStyle}" Margin="0,0,0,8" Foreground="White"/>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Debiet hoofdlijn" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="qv1" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_2" TabIndex="8" Width="80" IsReadOnly="True" Background="#1F333333"/>
+                <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <StackPanel x:Name="panelQv5" Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Debiet bypass" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="qv5" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_4" TabIndex="9" Width="80" IsReadOnly="True" Background="#1F333333"/>
+                <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <StackPanel x:Name="panelQv2" Orientation="Horizontal" Margin="0,3">
+                <TextBlock Text="Debiet aftapping" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="qv2" Style="{StaticResource LabelStyle}" Width="30"/>
+                <TextBox x:Name="i5_3" TabIndex="10" Width="80" IsReadOnly="True" Background="#1F333333"/>
+                <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
+            </StackPanel>
+
+            <!-- Knoppen -->
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Left">
+                <Button Content="Bereken" Click="btnBereken_Click" TabIndex="11" MinWidth="100" Margin="0,0,5,0"/>
+                <Button Content="Wissen" Click="btnWissen_Click" TabIndex="12" MinWidth="100" Margin="0,0,5,0"/>
+                <Button Content="Info" Click="btnInfo_Click" TabIndex="13" MinWidth="100" Margin="0,0,5,0"/>
+                <Button Content="Afsluiten" Click="btnAfsluiten_Click" TabIndex="14" MinWidth="100"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
