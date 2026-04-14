@@ -6,7 +6,7 @@ A comprehensive Windows desktop application for HVAC (Heating, Ventilation, and 
 
 | Startup menu | Air Duct Calculator (Scherm 1) | User Modules Calculator (Scherm 5) |
 |:---:|:---:|:---:|
-| ![Startup menu](HVAC%20Calculator/Resources/Screenshot01.png) | ![Air Duct Calculator](HVAC%20Calculator/Resources/Screenshot02.png) | ![User Modules Calculator](HVAC%20Calculator/Resources/Screenshot03.png) |
+| [![Startup menu](HVAC%20Calculator/Resources/Screenshot01.png)](HVAC%20Calculator/Resources/Screenshot01.png) | [![Air Duct Calculator](HVAC%20Calculator/Resources/Screenshot02.png)](HVAC%20Calculator/Resources/Screenshot02.png) | [![User Modules Calculator](HVAC%20Calculator/Resources/Screenshot03.png)](HVAC%20Calculator/Resources/Screenshot03.png) |
 | Select one of the five calculators | Calculate duct dimensions from flow rate, velocity and cross-section | Enter Φ and temperatures to derive all flow rates; transfer directly to pipe sizer |
 
 ## Version History
