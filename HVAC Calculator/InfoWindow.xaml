@@ -7,7 +7,7 @@
     
     <StackPanel Margin="15,20,15,15" HorizontalAlignment="Center" VerticalAlignment="Top">
         <TextBlock Text="HVAC calculator" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-        <TextBlock Text="Versie 2026.1" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,2"/>
+        <TextBlock Text="Versie 2026.2" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,2"/>
         <TextBlock Text="Snelselectie van leidingdiameters op basis van stroomsnelheden en leidingweerstand."
                    Foreground="White"
                    HorizontalAlignment="Center"

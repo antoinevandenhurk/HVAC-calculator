@@ -1,7 +1,7 @@
 <Window x:Class="HVACCalculator.GebruikersModulesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Gebruikers modulen - Versie 2026.1" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="Manual" ResizeMode="CanMinimize" Topmost="True" Icon="/Resources/VA.ico">
+        Title="Gebruikers modulen - Versie 2026.2" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="Manual" ResizeMode="CanMinimize" Topmost="True" Icon="/Resources/VA.ico">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="HeaderStyle">
             <Setter Property="Foreground" Value="White"/>
@@ -54,9 +54,15 @@
             <Expander Header="Module kiezen" Margin="0,0,0,12" Foreground="White" HorizontalAlignment="Stretch" IsExpanded="True" MinWidth="200">
                 <StackPanel Margin="8,4,8,6">
                     <ComboBox x:Name="cbGebruikersModule" SelectionChanged="cbGebruikersModule_SelectionChanged" SelectedIndex="0">
+                        <ComboBoxItem Content="ISSO module 1"/>
+                        <ComboBoxItem Content="ISSO module 2"/>
+                        <ComboBoxItem Content="ISSO module 3"/>
+                        <ComboBoxItem Content="ISSO module 4"/>
                         <ComboBoxItem Content="ISSO module 5"/>
                         <ComboBoxItem Content="ISSO module 6"/>
                         <ComboBoxItem Content="ISSO module 7"/>
+                        <ComboBoxItem Content="ISSO module 8"/>
+                        <ComboBoxItem Content="ISSO module 9"/>
                     </ComboBox>
                 </StackPanel>
             </Expander>
@@ -140,6 +146,7 @@
                 <TextBlock Text="qv1" Style="{StaticResource LabelStyle}" Width="30"/>
                 <TextBox x:Name="i5_2" TabIndex="8" Width="80" IsReadOnly="True" Background="#1F333333"/>
                 <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
+                <Button Content="Venster 2" Click="btnQv1ToVenster2_Click" TabIndex="11" MinWidth="100" Height="30" Margin="0"/>
             </StackPanel>
 
             <StackPanel x:Name="panelQv5" Orientation="Horizontal" Margin="0,3">
@@ -147,6 +154,7 @@
                 <TextBlock Text="qv5" Style="{StaticResource LabelStyle}" Width="30"/>
                 <TextBox x:Name="i5_4" TabIndex="9" Width="80" IsReadOnly="True" Background="#1F333333"/>
                 <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
+                <Button Content="Venster 2" Click="btnQv5ToVenster2_Click" TabIndex="12" MinWidth="100" Height="30" Margin="0"/>
             </StackPanel>
 
             <StackPanel x:Name="panelQv2" Orientation="Horizontal" Margin="0,3">
@@ -154,14 +162,15 @@
                 <TextBlock Text="qv2" Style="{StaticResource LabelStyle}" Width="30"/>
                 <TextBox x:Name="i5_3" TabIndex="10" Width="80" IsReadOnly="True" Background="#1F333333"/>
                 <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
+                <Button Content="Venster 2" Click="btnQv2ToVenster2_Click" TabIndex="13" MinWidth="100" Height="30" Margin="0"/>
             </StackPanel>
 
             <!-- Knoppen -->
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Left">
-                <Button Content="Bereken" Click="btnBereken_Click" TabIndex="11" MinWidth="100" Margin="0,0,5,0"/>
-                <Button Content="Wissen" Click="btnWissen_Click" TabIndex="12" MinWidth="100" Margin="0,0,5,0"/>
-                <Button Content="Info" Click="btnInfo_Click" TabIndex="13" MinWidth="100" Margin="0,0,5,0"/>
-                <Button Content="Afsluiten" Click="btnAfsluiten_Click" TabIndex="14" MinWidth="100"/>
+                <Button Content="Bereken" Click="btnBereken_Click" TabIndex="14" MinWidth="100" Margin="0,0,5,0"/>
+                <Button Content="Wissen" Click="btnWissen_Click" TabIndex="15" MinWidth="100" Margin="0,0,5,0"/>
+                <Button Content="Info" Click="btnInfo_Click" TabIndex="16" MinWidth="100" Margin="0,0,5,0"/>
+                <Button Content="Afsluiten" Click="btnAfsluiten_Click" TabIndex="17" MinWidth="100" Margin="0"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -35,6 +35,38 @@ public partial class CVGKWWindow : Window
         return value.ToString(format, CultureInfo.CurrentCulture);
     }
 
+    public void PrefillFromGebruikersModule(double qv, double theta2, double theta3)
+    {
+        // Opened from users-module screen: prefill values, calculate Φ and show diameter suggestion.
+        cbLeidingMateriaal.SelectedIndex = 0; // Dikwandige CV buis
+        i2_1.Clear();
+        i2_2.Text = FormatDouble(qv, "0.###");
+        i2_3.Text = "981";
+        i2_4.Text = "4,19";
+        i2_5.Text = FormatDouble(theta2, "0.##");
+        i2_6.Text = FormatDouble(theta3, "0.##");
+
+        if (qv > 0)
+        {
+            // Auto-calculate Φ and update pipe table so user sees results immediately.
+            if (TryGetDouble(i2_3.Text, out double rho) && TryGetDouble(i2_4.Text, out double cw))
+            {
+                double deltaT = Math.Abs(theta2 - theta3);
+                if (deltaT > 0.01)
+                {
+                    double phi = (qv / 3600.0) * rho * cw * deltaT;
+                    i2_1.Text = FormatDouble(phi, "0.###");
+                }
+            }
+
+            UpdatePipeSuggestion(qv);
+        }
+        else
+        {
+            InitPipeTable();
+        }
+    }
+
     private void btnBereken_Click(object sender, RoutedEventArgs e)
     {
         bool phi_filled = TryGetDouble(i2_1.Text, out double phi);

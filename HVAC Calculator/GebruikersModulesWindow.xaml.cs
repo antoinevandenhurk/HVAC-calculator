@@ -10,9 +10,15 @@ public partial class GebruikersModulesWindow : Window
 {
     private enum ModuleType
     {
+        Module1,
+        Module2,
+        Module3,
+        Module4,
         Module5,
         Module6,
-        Module7
+        Module7,
+        Module8,
+        Module9
     }
 
     public GebruikersModulesWindow()
@@ -32,8 +38,15 @@ public partial class GebruikersModulesWindow : Window
 
     private ModuleType SelectedModule => cbGebruikersModule.SelectedIndex switch
     {
-        1 => ModuleType.Module6,
-        2 => ModuleType.Module7,
+        0 => ModuleType.Module1,
+        1 => ModuleType.Module2,
+        2 => ModuleType.Module3,
+        3 => ModuleType.Module4,
+        4 => ModuleType.Module5,
+        5 => ModuleType.Module6,
+        6 => ModuleType.Module7,
+        7 => ModuleType.Module8,
+        8 => ModuleType.Module9,
         _ => ModuleType.Module5
     };
 
@@ -61,8 +74,14 @@ public partial class GebruikersModulesWindow : Window
 
         string imageName = SelectedModule switch
         {
+            ModuleType.Module1 => "isso_mod1.png",
+            ModuleType.Module2 => "isso_mod2.png",
+            ModuleType.Module3 => "isso_mod3.png",
+            ModuleType.Module4 => "isso_mod4.png",
             ModuleType.Module6 => "isso_mod6.png",
             ModuleType.Module7 => "isso_mod7.png",
+            ModuleType.Module8 => "isso_mod8.png",
+            ModuleType.Module9 => "isso_mod9.png",
             _ => "isso_mod5.png"
         };
 
@@ -121,13 +140,15 @@ public partial class GebruikersModulesWindow : Window
         {
             // Calculate qv1 from thermal power: Φ = (qv1 / 3600) × ρw × cw × (θ2 - θ3)
             double tempDiff = t2 - t3;
-            if (Math.Abs(tempDiff) < 0.01)
+            double absTempDiff = Math.Abs(tempDiff);
+            if (absTempDiff < 0.01)
             {
                 MessageBox.Show("Temperatuurverschil (θ2 - θ3) is te klein. Kies grotere temperaturen.", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            double qv1 = (phi * 3600.0) / (rho * cw * tempDiff);
+            // For cooling mode, use absolute ΔT so flow remains positive.
+            double qv1 = (phi * 3600.0) / (rho * cw * absTempDiff);
 
             if (!IsFinite(qv1) || qv1 <= 0)
             {
@@ -195,6 +216,52 @@ public partial class GebruikersModulesWindow : Window
         i5_8.Clear();
         i5_9.Text = "981";
         i5_10.Text = "4,19";
+    }
+
+    private void OpenVenster2WithQv(TextBox qvField, double theta2, double theta3, string qvNaam)
+    {
+        if (!TryGetDouble(qvField.Text, out double qv) || qv <= 0)
+        {
+            MessageBox.Show($"{qvNaam} is nog niet berekend of ongeldig. Klik eerst op Bereken.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        var win = new CVGKWWindow { Owner = this };
+        win.PrefillFromGebruikersModule(qv, theta2, theta3);
+        win.Show();
+    }
+
+    private void btnQv1ToVenster2_Click(object sender, RoutedEventArgs e)
+    {
+        if (!TryGetDouble(i5_6.Text, out double theta2) || !TryGetDouble(i5_7.Text, out double theta3))
+        {
+            MessageBox.Show("Voor qv1 moeten θ2 en θ3 ingevuld zijn.", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        OpenVenster2WithQv(i5_2, theta2, theta3, "qv1");
+    }
+
+    private void btnQv5ToVenster2_Click(object sender, RoutedEventArgs e)
+    {
+        if (!TryGetDouble(i5_5.Text, out double theta1) || !TryGetDouble(i5_8.Text, out double theta4))
+        {
+            MessageBox.Show("Voor qv5 moeten θ1 en θ4 ingevuld zijn.", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        OpenVenster2WithQv(i5_4, theta1, theta4, "qv5");
+    }
+
+    private void btnQv2ToVenster2_Click(object sender, RoutedEventArgs e)
+    {
+        if (!TryGetDouble(i5_6.Text, out double theta2) || !TryGetDouble(i5_7.Text, out double theta3))
+        {
+            MessageBox.Show("Voor qv2 moeten θ2 en θ3 ingevuld zijn.", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        OpenVenster2WithQv(i5_3, theta2, theta3, "qv2");
     }
 
     private void TextBox_GotFocus(object sender, RoutedEventArgs e)
