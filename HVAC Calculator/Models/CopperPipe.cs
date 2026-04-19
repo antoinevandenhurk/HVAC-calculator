@@ -180,12 +180,12 @@ public class CopperPipe
         new() { Omschrijving = "Gelaste stalen gasbuis, 1.1/4\"",OuterDiameter = 42.4,  WallThickness = 3.25 },
         new() { Omschrijving = "Gelaste stalen gasbuis, 1.1/2\"",OuterDiameter = 48.3,  WallThickness = 3.25 },
         new() { Omschrijving = "Gelaste stalen gasbuis, 2\"",    OuterDiameter = 60.3,  WallThickness = 3.65 },
-        new() { Omschrijving = "Vlambuis glad, 76,1 (2.1/2\")",  OuterDiameter = 76.1,  WallThickness = 2.9  },
-        new() { Omschrijving = "Vlambuis glad, 88,9 (3\")",      OuterDiameter = 88.9,  WallThickness = 3.2  },
-        new() { Omschrijving = "Vlambuis glad, 114,3 (4\")",     OuterDiameter = 114.3, WallThickness = 3.6  },
-        new() { Omschrijving = "Vlambuis glad, 139,7",           OuterDiameter = 139.7, WallThickness = 4.0  },
-        new() { Omschrijving = "Vlambuis glad, 168,3",           OuterDiameter = 168.3, WallThickness = 4.5  },
-        new() { Omschrijving = "Vlambuis glad, 219,1",           OuterDiameter = 219.1, WallThickness = 6.3  },
+        new() { Omschrijving = "Vlambuis glad, DN65 (2.1/2\")",  OuterDiameter = 76.1,  WallThickness = 2.9  },
+        new() { Omschrijving = "Vlambuis glad, DN80 (3\")",      OuterDiameter = 88.9,  WallThickness = 3.2  },
+        new() { Omschrijving = "Vlambuis glad, DN100 (114,3)",    OuterDiameter = 114.3, WallThickness = 3.6  },
+        new() { Omschrijving = "Vlambuis glad, DN125 (139,7)",    OuterDiameter = 139.7, WallThickness = 4.0  },
+        new() { Omschrijving = "Vlambuis glad, DN150 (168,3)",    OuterDiameter = 168.3, WallThickness = 4.5  },
+        new() { Omschrijving = "Vlambuis glad, DN200 (219,1)",    OuterDiameter = 219.1, WallThickness = 6.3  },
     ];
 
     // Henco buis (meerlaags composiet)

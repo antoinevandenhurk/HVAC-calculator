@@ -90,35 +90,35 @@
             <TextBlock Text="Temperaturen" Style="{StaticResource LabelStyle}" Margin="0,10,0,3" Foreground="#FF0264C9"/>
             
             <StackPanel Orientation="Horizontal" Margin="0,3">
-                <TextBlock Text="Ingang bypass" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="Ta opwekker" Style="{StaticResource LabelStyle}" Width="140"/>
                 <TextBlock Text="θ1" Style="{StaticResource LabelStyle}" Width="30"/>
                 <TextBox x:Name="i5_5" TabIndex="2" Width="80"/>
                 <TextBlock Text="°C" Style="{StaticResource LabelStyle}" Width="40"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,3">
-                <TextBlock Text="Ingang hoofdlijn" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="Ta gebruiker" Style="{StaticResource LabelStyle}" Width="140"/>
                 <TextBlock Text="θ2" Style="{StaticResource LabelStyle}" Width="30"/>
                 <TextBox x:Name="i5_6" TabIndex="3" Width="80"/>
                 <TextBlock Text="°C" Style="{StaticResource LabelStyle}" Width="40"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,3">
-                <TextBlock Text="Uitgang hoofdlijn" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="Tr gebruiker" Style="{StaticResource LabelStyle}" Width="140"/>
                 <TextBlock Text="θ3" Style="{StaticResource LabelStyle}" Width="30"/>
                 <TextBox x:Name="i5_7" TabIndex="4" Width="80"/>
                 <TextBlock Text="°C" Style="{StaticResource LabelStyle}" Width="40"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,3">
-                <TextBlock Text="Uitgang systeem" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="Tr naar opwekker" Style="{StaticResource LabelStyle}" Width="140"/>
                 <TextBlock Text="θ4" Style="{StaticResource LabelStyle}" Width="30"/>
-                <TextBox x:Name="i5_8" TabIndex="5" Width="80" IsReadOnly="True" Background="#1F333333"/>
+                <TextBox x:Name="i5_8" TabIndex="5" Width="80" IsReadOnly="True" Background="#1F333333" Foreground="White"/>
                 <TextBlock Text="°C" Style="{StaticResource LabelStyle}" Width="40"/>
             </StackPanel>
 
             <!-- Fluidconstanten -->
-            <TextBlock Text="Fluidconstanten" Style="{StaticResource LabelStyle}" Margin="0,10,0,3" Foreground="#FF0264C9"/>
+            <TextBlock Text="Vloeistof eigenschappen" Style="{StaticResource LabelStyle}" Margin="0,10,0,3" Foreground="#FF0264C9"/>
             
             <StackPanel Orientation="Horizontal" Margin="0,3">
                 <TextBlock Text="Soortelijke massa" Style="{StaticResource LabelStyle}" Width="140"/>
@@ -139,30 +139,29 @@
         <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top" Margin="0,15,0,0">
             
             <!-- BEREKENINGSRESULTATEN SECTIE -->
-            <TextBlock Text="Berekend" Style="{StaticResource HeaderStyle}" Margin="0,0,0,8" Foreground="White"/>
+            <TextBlock Text="Volumestromen" Style="{StaticResource LabelStyle}" Margin="0,0,0,8" Foreground="#FF0264C9"/>
             
             <StackPanel Orientation="Horizontal" Margin="0,3">
-                <TextBlock Text="Debiet hoofdlijn" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="Gebruikerdebiet" Style="{StaticResource LabelStyle}" Width="140"/>
                 <TextBlock Text="qv1" Style="{StaticResource LabelStyle}" Width="30"/>
-                <TextBox x:Name="i5_2" TabIndex="8" Width="80" IsReadOnly="True" Background="#1F333333"/>
+                <TextBox x:Name="i5_2" TabIndex="8" Width="80" IsReadOnly="True" Background="#1F333333" Foreground="White"/>
                 <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
-                <Button Content="Venster 2" Click="btnQv1ToVenster2_Click" TabIndex="11" MinWidth="100" Height="30" Margin="0"/>
+                <Button Content="Diameter qv1" Click="btnQv1ToVenster2_Click" TabIndex="11" MinWidth="100" Height="30" Margin="0"/>
             </StackPanel>
 
             <StackPanel x:Name="panelQv5" Orientation="Horizontal" Margin="0,3">
-                <TextBlock Text="Debiet bypass" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="Transportdebiet" Style="{StaticResource LabelStyle}" Width="140"/>
                 <TextBlock Text="qv5" Style="{StaticResource LabelStyle}" Width="30"/>
-                <TextBox x:Name="i5_4" TabIndex="9" Width="80" IsReadOnly="True" Background="#1F333333"/>
+                <TextBox x:Name="i5_4" TabIndex="9" Width="80" IsReadOnly="True" Background="#1F333333" Foreground="White"/>
                 <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
-                <Button Content="Venster 2" Click="btnQv5ToVenster2_Click" TabIndex="12" MinWidth="100" Height="30" Margin="0"/>
+                <Button Content="Diameter qv5" Click="btnQv5ToVenster2_Click" TabIndex="12" MinWidth="100" Height="30" Margin="0"/>
             </StackPanel>
 
             <StackPanel x:Name="panelQv2" Orientation="Horizontal" Margin="0,3">
-                <TextBlock Text="Debiet aftapping" Style="{StaticResource LabelStyle}" Width="140"/>
+                <TextBlock Text="Mengdebiet" Style="{StaticResource LabelStyle}" Width="140"/>
                 <TextBlock Text="qv2" Style="{StaticResource LabelStyle}" Width="30"/>
-                <TextBox x:Name="i5_3" TabIndex="10" Width="80" IsReadOnly="True" Background="#1F333333"/>
+                <TextBox x:Name="i5_3" TabIndex="10" Width="80" IsReadOnly="True" Background="#1F333333" Foreground="White"/>
                 <TextBlock Text="m³/h" Style="{StaticResource LabelStyle}" Width="40"/>
-                <Button Content="Venster 2" Click="btnQv2ToVenster2_Click" TabIndex="13" MinWidth="100" Height="30" Margin="0"/>
             </StackPanel>
 
             <!-- Knoppen -->

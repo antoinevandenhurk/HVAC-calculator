@@ -89,7 +89,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="0,15">
                 <TextBlock Text="Berekende volumestroom (Qv)" Style="{StaticResource LabelStyle}" Width="200"/>
-                <TextBox x:Name="i3_5" IsReadOnly="True" Background="#FF333333"/>
+                <TextBox x:Name="i3_5" IsReadOnly="True" Background="#FF333333" Foreground="White"/>
                 <TextBlock Text=" l/s " Style="{StaticResource LabelStyle}"/>
             </StackPanel>
         </StackPanel>

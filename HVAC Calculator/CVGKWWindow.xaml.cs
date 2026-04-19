@@ -10,6 +10,18 @@ namespace HVACCalculator;
 
 public partial class CVGKWWindow : Window
 {
+    private static void SelectMaterial(ComboBox comboBox, string materialName)
+    {
+        foreach (var item in comboBox.Items)
+        {
+            if (item is ComboBoxItem comboBoxItem && string.Equals(comboBoxItem.Content?.ToString(), materialName, StringComparison.Ordinal))
+            {
+                comboBox.SelectedItem = comboBoxItem;
+                return;
+            }
+        }
+    }
+
     public CVGKWWindow()
     {
         InitializeComponent();
@@ -21,6 +33,7 @@ public partial class CVGKWWindow : Window
                 Left = Owner.Left + (Owner.ActualWidth - ActualWidth) / 2;
                 Top = Owner.Top + Owner.ActualHeight - ActualHeight;
             }
+            SelectMaterial(cbLeidingMateriaal, AppSettings.PreferredMaterialCvgkw);
             InitPipeTable();
         };
     }
@@ -37,7 +50,7 @@ public partial class CVGKWWindow : Window
 
     public void PrefillFromGebruikersModule(double qv, double theta2, double theta3)
     {
-        // Opened from users-module screen: prefill values, calculate Φ and show diameter suggestion.
+        // Opened from users-module screen: prefill values and show immediate diameter suggestion.
         cbLeidingMateriaal.SelectedIndex = 0; // Dikwandige CV buis
         i2_1.Clear();
         i2_2.Text = FormatDouble(qv, "0.###");
@@ -48,17 +61,6 @@ public partial class CVGKWWindow : Window
 
         if (qv > 0)
         {
-            // Auto-calculate Φ and update pipe table so user sees results immediately.
-            if (TryGetDouble(i2_3.Text, out double rho) && TryGetDouble(i2_4.Text, out double cw))
-            {
-                double deltaT = Math.Abs(theta2 - theta3);
-                if (deltaT > 0.01)
-                {
-                    double phi = (qv / 3600.0) * rho * cw * deltaT;
-                    i2_1.Text = FormatDouble(phi, "0.###");
-                }
-            }
-
             UpdatePipeSuggestion(qv);
         }
         else
@@ -230,15 +232,14 @@ public partial class CVGKWWindow : Window
     private void UpdatePipeSuggestion(double qv)
     {
         var pipes = GetSelectedPipes();
-        double minVelocity = AppSettings.MinVelocityCvgkw;
-        double maxVelocity = AppSettings.MaxVelocityCvgkw;
+        double minLinDp = AppSettings.MinVelocityCvgkw;
+        double maxLinDp = AppSettings.MaxVelocityCvgkw;
         string material = GetSelectedMaterialName();
         double roughnessMm = CopperPipe.GetRoughnessMm(material);
         double fluidTemperatureC = GetFluidTemperatureC();
         double density = CopperPipe.GetWaterDensity(fluidTemperatureC);
         double kinematicViscosity = CopperPipe.GetWaterKinematicViscosity(fluidTemperatureC);
-        const double minResistanceBand = 150.0;
-        const double maxResistanceBand = 200.0;
+        const double targetResistance = 150.0;
 
         var evaluated = pipes
             .Select(p =>
@@ -249,19 +250,17 @@ public partial class CVGKWWindow : Window
             })
             .ToList();
 
-        var resistanceBandCandidate = evaluated
-            .Where(x => x.Resistance >= minResistanceBand && x.Resistance <= maxResistanceBand)
-            .OrderByDescending(x => x.Resistance)
-            .FirstOrDefault();
-
         var filtered = evaluated
-            .Where(x =>
-                (x.Velocity >= minVelocity && x.Velocity <= maxVelocity) ||
-                (resistanceBandCandidate != null && x.Pipe == resistanceBandCandidate.Pipe))
+            .Where(x => x.Resistance >= minLinDp && x.Resistance <= maxLinDp)
+            .OrderByDescending(x => x.Resistance)
             .ToList();
 
-        // Aanbevolen = kleinste buis waarbij snelheid ≤ 1,0 m/s
-        var aanbevolen = filtered.Select(x => x.Pipe).FirstOrDefault(p => p.Velocity(qv) <= 1.0);
+        // Aanbevolen = regel die het dichtst bij doelweerstand ligt binnen de band.
+        var aanbevolen = filtered
+            .OrderBy(x => Math.Abs(x.Resistance - targetResistance))
+            .ThenByDescending(x => x.Resistance)
+            .Select(x => x.Pipe)
+            .FirstOrDefault();
 
         var rows = filtered.Select(x =>
         {

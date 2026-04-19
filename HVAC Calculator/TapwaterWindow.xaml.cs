@@ -9,6 +9,18 @@ namespace HVACCalculator;
 
 public partial class TapwaterWindow : Window
 {
+    private static void SelectMaterial(ComboBox comboBox, string materialName)
+    {
+        foreach (var item in comboBox.Items)
+        {
+            if (item is ComboBoxItem comboBoxItem && string.Equals(comboBoxItem.Content?.ToString(), materialName, StringComparison.Ordinal))
+            {
+                comboBox.SelectedItem = comboBoxItem;
+                return;
+            }
+        }
+    }
+
     public TapwaterWindow()
     {
         InitializeComponent();
@@ -20,6 +32,7 @@ public partial class TapwaterWindow : Window
                 Left = Owner.Left + (Owner.ActualWidth - ActualWidth) / 2;
                 Top = Owner.Top + Owner.ActualHeight - ActualHeight;
             }
+            SelectMaterial(cbLeidingMateriaal, AppSettings.PreferredMaterialTapwater);
             InitPipeTable();
         };
     }
