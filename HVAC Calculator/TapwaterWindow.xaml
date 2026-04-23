@@ -1,7 +1,7 @@
 <Window x:Class="HVACCalculator.TapwaterWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tapwater Calculator - Versie 2026.2" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="Manual" ResizeMode="CanMinimize" Topmost="True" Icon="/Resources/VA.ico">
+        Title="Tapwater Calculator - Versie 2026.3" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="Manual" ResizeMode="CanMinimize" Topmost="True" Icon="/Resources/VA.ico">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="HeaderStyle">
             <Setter Property="Foreground" Value="White"/>

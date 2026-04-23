@@ -1,7 +1,7 @@
 <Window x:Class="HVACCalculator.StartupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="HVAC Calculator - Versie 2026.2" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/Resources/VA.ico">
+        Title="HVAC Calculator - Versie 2026.3" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/Resources/VA.ico">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="HeaderStyle">
             <Setter Property="Foreground" Value="White"/>
@@ -75,30 +75,35 @@
         </StackPanel>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30">
-            <TextBlock Text="Selecteer een calculator" Style="{StaticResource HeaderStyle}"/>
+            <TextBlock Text="Selecteer een tool" Style="{StaticResource HeaderStyle}"/>
 
             <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="Luchtkanaal calculator" Style="{StaticResource CalculatorNameStyle}"/>
+                <TextBlock Text="01. Luchtkanaal calculator" Style="{StaticResource CalculatorNameStyle}"/>
                 <Button Content="Start" Click="btnStartAirDuct_Click"/>
             </StackPanel>
 
             <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="CV / GKW buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
+                <TextBlock Text="02. CV / GKW buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
                 <Button Content="Start" Click="btnStartCVGKW_Click"/>
             </StackPanel>
 
             <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="Tapwater buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
+                <TextBlock Text="03. Tapwater buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
                 <Button Content="Start" Click="btnStartTapwater_Click"/>
             </StackPanel>
 
             <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="Mengwater calculator" Style="{StaticResource CalculatorNameStyle}"/>
+                <TextBlock Text="04. Mengwater calculator" Style="{StaticResource CalculatorNameStyle}"/>
                 <Button Content="Start" Click="btnStartMengwater_Click"/>
             </StackPanel>
 
             <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="Gebruikers modulen" Style="{StaticResource CalculatorNameStyle}"/>
+                <TextBlock Text="05. Warm tapwater circulatie" Style="{StaticResource CalculatorNameStyle}"/>
+                <Button Content="Start" Click="btnStartWarmTapwaterCirculatie_Click"/>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource CalculatorItemStyle}">
+                <TextBlock Text="06. Gebruikers modulen" Style="{StaticResource CalculatorNameStyle}"/>
                 <Button Content="Start" Click="btnStartGebruikersModulen_Click"/>
             </StackPanel>
         </StackPanel>

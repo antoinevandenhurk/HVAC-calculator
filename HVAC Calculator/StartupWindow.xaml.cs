@@ -49,6 +49,14 @@ public partial class StartupWindow : Window
         win.Owner = this;
         win.Show();
     }
+
+    private void btnStartWarmTapwaterCirculatie_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new WarmTapwaterCirculatieWindow();
+        win.Owner = this;
+        win.Show();
+    }
+
     private void btnStartGebruikersModulen_Click(object sender, RoutedEventArgs e)
     {
         var win = new GebruikersModulesWindow();

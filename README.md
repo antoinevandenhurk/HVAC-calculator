@@ -7,9 +7,16 @@ A comprehensive Windows desktop application for HVAC (Heating, Ventilation, and 
 | Startup menu | Air Duct Calculator (Scherm 1) | User Modules Calculator (Scherm 5) |
 |:---:|:---:|:---:|
 | [![Startup menu](HVAC%20Calculator/Resources/Screenshot01.png)](HVAC%20Calculator/Resources/Screenshot01.png) | [![Air Duct Calculator](HVAC%20Calculator/Resources/Screenshot02.png)](HVAC%20Calculator/Resources/Screenshot02.png) | [![User Modules Calculator](HVAC%20Calculator/Resources/Screenshot03.png)](HVAC%20Calculator/Resources/Screenshot03.png) |
-| Select one of the five calculators | Calculate duct dimensions from flow rate, velocity and cross-section | Enter Φ and temperatures to derive all flow rates; transfer directly to pipe sizer |
+| Select one of the six tools | Calculate duct dimensions from flow rate, velocity and cross-section | Enter Φ and temperatures to derive all flow rates; transfer directly to pipe sizer |
 
 ## Version History
+
+### v2026.3 (April 2026)
+- **New Tool 05: Warm Tapwater Circulation** — added a dedicated recirculation calculator based on ISSO formula 5.62 (without equivalent length), including row-based heat loss, circulation flow and total pressure loss
+- **Auto-calculation workflow** — removed the manual Calculate button in Tool 05; all output values now update automatically while editing
+- **Faster keyboard entry** — improved data-entry flow in Tool 05 with logical Tab order, support for `+` key to add a row, and automatic carry-over of values from the previous row
+- **Velocity safety highlight** — in Tool 05, row-level Speed values above 0.7 m/s are now shown in bright red for quick validation
+- **Insulation thickness alignment** — updated insulation thickness options to mapped design values used in the calculation model (0, 10, 15, 20, 25, 30, 40, 50 mm)
 
 ### v2026.2 (April 2026)
 - **Automatic pipe selection on transfer** — opening Venster 2 from the User Modules screen now immediately shows the pipe diameter table without requiring an extra click
@@ -30,6 +37,7 @@ A comprehensive Windows desktop application for HVAC (Heating, Ventilation, and 
 - **Air Duct Calculator (Scherm 1)** - HVAC ductwork sizing and velocity optimization
 - **Mixing Water Calculator (Scherm 4)** - Three-stream mixing point balancer; calculates any missing flow rate or temperature using energy and mass balance
 - **User Modules Calculator (Scherm 5)** - ISSO standard system modules 1–9 with visual diagrams; enter Φ and all temperatures to automatically derive all flow rates (qv1, qv2, qv5)
+- **Warm Tapwater Circulation (Tool 05)** - ISSO 5.62 recirculation heat-loss calculator with dynamic rows, automatic circulation flow sizing, line pressure loss, and high-speed warning highlight
 - **Information Window** - Reference materials and calculation guidelines
 
 ### Pipe Material Database
@@ -119,6 +127,7 @@ HVAC Calculator/
 ├── TapwaterWindow.xaml/cs             # Scherm 3 – Tap water pipe calculator
 ├── MengwaterWindow.xaml/cs            # Scherm 4 – Mixing water calculator
 ├── GebruikersModulesWindow.xaml/cs    # Scherm 5 – ISSO user modules calculator
+├── WarmTapwaterCirculatieWindow.xaml/cs # Tool 05 – Warm tapwater recirculation calculator
 ├── InfoWindow.xaml/cs                 # Reference information
 ├── SettingsWindow.xaml/cs             # Application settings
 ├── AppSettings.cs                     # Persisted user settings

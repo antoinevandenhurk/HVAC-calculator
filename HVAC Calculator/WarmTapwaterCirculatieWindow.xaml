@@ -1,0 +1,222 @@
+<Window x:Class="HVACCalculator.WarmTapwaterCirculatieWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Warm tapwater circulatie zonder deelringen - Versie 2026.3" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="Manual" ResizeMode="CanMinimize" Topmost="True" Icon="/Resources/VA.ico">
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="HeaderStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5,20,5,2"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Background" Value="#FF0264C9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="MinWidth" Value="100"/>
+        </Style>
+        <Style x:Key="RowActionButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="#FF1D8BF0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF0264C9"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="MinWidth" Value="24"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="MinWidth" Value="180"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" Width="1320">
+            <TextBlock Text="Warm tapwater circulatie zonder deelringen" Style="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Margin="0,0,0,12"/>
+
+            <Expander Header="Leidingmateriaal kiezen" Margin="0,0,0,8" Foreground="White" HorizontalAlignment="Stretch" IsExpanded="True">
+                <StackPanel Margin="8,4,8,6">
+                    <ComboBox x:Name="cbLeidingMateriaal" SelectionChanged="cbLeidingMateriaal_SelectionChanged" SelectedIndex="3">
+                        <ComboBoxItem Content="Dikwandige CV buis"/>
+                        <ComboBoxItem Content="Dunwandige CV buis"/>
+                        <ComboBoxItem Content="Henco buis"/>
+                        <ComboBoxItem Content="Koperen buis"/>
+                        <ComboBoxItem Content="PE SDR11 buis"/>
+                    </ComboBox>
+                </StackPanel>
+            </Expander>
+
+            <TextBlock Text="ISSO-formule 5.62: Φtot = Σ l × U_b × (Twater - Tomgeving)" Style="{StaticResource LabelStyle}" Margin="0,2,0,4" FontSize="13"/>
+            <TextBlock Text="Volumestroom: qv = Φtot / (ρw × cw × ΔT), waarbij ΔT = Tleiding - 60 °C" Style="{StaticResource LabelStyle}" Margin="0,0,0,6" FontSize="12"/>
+
+            <DataGrid x:Name="recircGrid"
+                      ItemsSource="{Binding RecirculationRows}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      RowHeaderWidth="0"
+                      Background="#FF001A4D"
+                      RowBackground="#FF001A4D"
+                      AlternatingRowBackground="#FF002262"
+                      Foreground="White"
+                      BorderBrush="#FF0264C9"
+                      BorderThickness="1"
+                      HorizontalScrollBarVisibility="Disabled"
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False"
+                      CanUserSortColumns="False"
+                      Margin="0,2,0,8"
+                      Height="285"
+                      TabIndex="1"
+                      KeyboardNavigation.TabNavigation="Local">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#FF0264C9"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="6,4"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Binding="{Binding RowNumber}" Width="30" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Leidinglengte [m]" Binding="{Binding LengthM, UpdateSourceTrigger=PropertyChanged}" Width="115">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Padding" Value="4,1"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.EditingElementStyle>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Padding" Value="4,1"/>
+                            </Style>
+                        </DataGridTextColumn.EditingElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Leidingdiameter [mm]" Width="130">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding DataContext.AvailableDiameters, RelativeSource={RelativeSource AncestorType=Window}}"
+                                          SelectedItem="{Binding OuterDiameterMm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          MinWidth="95" Height="24" Margin="2"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Isolatiedikte [mm]" Width="130">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding DataContext.AvailableInsulationThicknesses, RelativeSource={RelativeSource AncestorType=Window}}"
+                                          SelectedItem="{Binding InsulationThicknessMm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          MinWidth="95" Height="24" Margin="2"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Omgevingtemp [°C]" Binding="{Binding AmbientTempC, UpdateSourceTrigger=PropertyChanged}" Width="130"/>
+                    <DataGridTextColumn Header="lambda leiding" Binding="{Binding PipeLambda}" Width="95" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="lambda isolatie" Binding="{Binding InsulationLambda}" Width="95" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="U_b [W/mK]" Binding="{Binding UbValue}" Width="95" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Snelheid [m/s]" Binding="{Binding Velocity}" Width="95" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsVelocityTooHigh}" Value="True">
+                                        <Setter Property="Foreground" Value="#FFFF1A1A"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Lin dp [Pa/m]" Binding="{Binding PressureLossPerM}" Width="95" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Phi [W]" Binding="{Binding RowHeatLossW}" Width="95" IsReadOnly="True"/>
+                    <DataGridTemplateColumn Header="+" Width="35">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="+" Style="{StaticResource RowActionButtonStyle}" Click="AddRow_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="-" Width="35">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="-" Style="{StaticResource RowActionButtonStyle}" Click="RemoveRow_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Margin="0,3,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="45"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Totaal warmteverlies Φtot" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbTotalHeatLoss" IsReadOnly="True" Background="#FF333333" Foreground="White" Width="140"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="W" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="Temperatuurdaling" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="0" Grid.Column="4" x:Name="tbTemperatureDrop" IsReadOnly="True" Background="#FF333333" Foreground="White" Width="140"/>
+                <TextBlock Grid.Row="0" Grid.Column="5" Text="°C" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Volumestroom recirculatie qv" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbRecirculationFlow" IsReadOnly="True" Background="#FF333333" Foreground="White" Width="140"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="l/s" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="Totaal drukverlies" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="1" Grid.Column="4" x:Name="tbTotalPressureLoss" IsReadOnly="True" Background="#FF333333" Foreground="White" Width="140"/>
+                <TextBlock Grid.Row="1" Grid.Column="5" Text="Pa" Style="{StaticResource LabelStyle}"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,0,0,0">
+            <Button Content="Wissen" Click="btnWissen_Click" Margin="5,2"/>
+            <Button Content="Afsluiten" Click="btnAfsluiten_Click" Margin="5,2"/>
+            <Button Content="Info" Click="btnInfo_Click" Margin="5,2"/>
+            <Border Height="28" Background="Transparent"/>
+            <TextBlock Text="Leidingwatertemp [°C]" Style="{StaticResource LabelStyle}" Margin="5,0,5,0"/>
+            <TextBox x:Name="tbWaterTempC" Text="65" Margin="5,2" Width="100"/>
+        </StackPanel>
+    </Grid>
+</Window>
