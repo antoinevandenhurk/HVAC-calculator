@@ -6,9 +6,10 @@ namespace HVACCalculator;
 
 public partial class InfoWindow : Window
 {
-    public InfoWindow()
+    public InfoWindow(string? description = null)
     {
         InitializeComponent();
+        tbDescription.Text = description ?? "Snelselectie van kanalen en leidingdiameters op basis van stroomsnelheden en leidingweerstand.";
         Loaded += (s, e) =>
         {
             WindowStateManager.RegisterWindow(this);

@@ -134,7 +134,8 @@ public partial class AirDuctWindow : Window
 
     private void btnInfo_Click(object sender, RoutedEventArgs e)
     {
-        InfoWindow info = new InfoWindow { Owner = this };
+        string airDuctInfo = "Snelselectie van kanalen op basis van stroomsnelheden. Voor DykaAir kanalen kan je equivalente kanaalmaten invoeren, namelijk; DykaAir 195x80 is ~Ø131 en 235x80 is ~Ø143.";
+        InfoWindow info = new InfoWindow(airDuctInfo) { Owner = this };
         info.ShowDialog();
     }
 

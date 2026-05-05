@@ -7,8 +7,8 @@
     
     <StackPanel Margin="15,20,15,15" HorizontalAlignment="Center" VerticalAlignment="Top">
         <TextBlock Text="HVAC calculator" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-        <TextBlock Text="Versie 2026.3" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,2"/>
-        <TextBlock Text="Snelselectie van kanalen en leidingdiameters op basis van stroomsnelheden en leidingweerstand."
+        <TextBlock Text="{Binding Source={x:Static Application.Current}, Path=Resources[AppVersion], StringFormat=Versie {0}}" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,2"/>
+        <TextBlock x:Name="tbDescription"
                    Foreground="White"
                    HorizontalAlignment="Center"
                    Margin="0,2,0,6"

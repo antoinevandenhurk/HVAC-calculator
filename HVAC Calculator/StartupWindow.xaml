@@ -1,7 +1,7 @@
 <Window x:Class="HVACCalculator.StartupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="HVAC Calculator - Versie 2026.3" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/Resources/VA.ico">
+        Title="{Binding Source={x:Static Application.Current}, Path=Resources[AppVersion], StringFormat=HVAC Calculator - Versie {0}}" SizeToContent="WidthAndHeight" Background="#FF002262" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/Resources/VA.ico">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="HeaderStyle">
             <Setter Property="Foreground" Value="White"/>
