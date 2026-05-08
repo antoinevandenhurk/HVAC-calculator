@@ -20,6 +20,14 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="MinWidth" Value="100"/>
         </Style>
+        <Style x:Key="ToolLaunchButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Width" Value="380"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="0,3,0,3"/>
+        </Style>
         <Style x:Key="GearButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="34"/>
             <Setter Property="Height" Value="34"/>
@@ -77,35 +85,20 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30">
             <TextBlock Text="Selecteer een tool" Style="{StaticResource HeaderStyle}"/>
 
-            <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="01. Luchtkanaal calculator" Style="{StaticResource CalculatorNameStyle}"/>
-                <Button Content="Start" Click="btnStartAirDuct_Click"/>
-            </StackPanel>
-
-            <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="02. CV / GKW buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
-                <Button Content="Start" Click="btnStartCVGKW_Click"/>
-            </StackPanel>
-
-            <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="03. Tapwater buis calculator" Style="{StaticResource CalculatorNameStyle}"/>
-                <Button Content="Start" Click="btnStartTapwater_Click"/>
-            </StackPanel>
-
-            <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="04. Mengwater calculator" Style="{StaticResource CalculatorNameStyle}"/>
-                <Button Content="Start" Click="btnStartMengwater_Click"/>
-            </StackPanel>
-
-            <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="05. Warm tapwater circulatie" Style="{StaticResource CalculatorNameStyle}"/>
-                <Button Content="Start" Click="btnStartWarmTapwaterCirculatie_Click"/>
-            </StackPanel>
-
-            <StackPanel Style="{StaticResource CalculatorItemStyle}">
-                <TextBlock Text="06. Gebruikers modulen" Style="{StaticResource CalculatorNameStyle}"/>
-                <Button Content="Start" Click="btnStartGebruikersModulen_Click"/>
-            </StackPanel>
+            <Border BorderBrush="#FF0264C9" BorderThickness="1" Padding="8" CornerRadius="4">
+                <ScrollViewer Height="188" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel>
+                        <Button Content="01. CV / GKW buis calculator" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartCVGKW_Click"/>
+                        <Button Content="02. Gebruikers modulen" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartGebruikersModulen_Click"/>
+                        <Button Content="03. Kanalen ballast" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartKanalenBallast_Click"/>
+                        <Button Content="04. Leiding ballast" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartLeidingballast_Click"/>
+                        <Button Content="05. Luchtkanaal calculator" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartAirDuct_Click"/>
+                        <Button Content="06. Mengwater calculator" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartMengwater_Click"/>
+                        <Button Content="07. Tapwater buis calculator" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartTapwater_Click"/>
+                        <Button Content="08. Warm tapwater circulatie" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartWarmTapwaterCirculatie_Click"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
         </StackPanel>
     </Grid>
 </Window>

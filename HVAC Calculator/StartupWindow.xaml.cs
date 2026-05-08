@@ -63,5 +63,19 @@ public partial class StartupWindow : Window
         win.Owner = this;
         win.Show();
     }
+
+    private void btnStartLeidingballast_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new LeidingballastWindow();
+        win.Owner = this;
+        win.Show();
+    }
+
+    private void btnStartKanalenBallast_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new KanalenBallastWindow();
+        win.Owner = this;
+        win.Show();
+    }
 }
 

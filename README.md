@@ -7,9 +7,15 @@ A comprehensive Windows desktop application for HVAC (Heating, Ventilation, and 
 | Startup menu | Air Duct Calculator (Scherm 1) | User Modules Calculator (Scherm 5) |
 |:---:|:---:|:---:|
 | [![Startup menu](HVAC%20Calculator/Resources/Screenshot01.png)](HVAC%20Calculator/Resources/Screenshot01.png) | [![Air Duct Calculator](HVAC%20Calculator/Resources/Screenshot02.png)](HVAC%20Calculator/Resources/Screenshot02.png) | [![User Modules Calculator](HVAC%20Calculator/Resources/Screenshot03.png)](HVAC%20Calculator/Resources/Screenshot03.png) |
-| Select one of the six tools | Calculate duct dimensions from flow rate, velocity and cross-section | Enter Φ and temperatures to derive all flow rates; transfer directly to pipe sizer |
+| Select one of the eight tools | Calculate duct dimensions from flow rate, velocity and cross-section | Enter Φ and temperatures to derive all flow rates; transfer directly to pipe sizer |
 
 ## Version History
+
+### v2026.4 (May 2026)
+- **New Tool 07: Leiding ballast** — dynamic row-based ballast calculator for pipe systems with material and diameter selection, automatic per-row and total weight calculation, and CSV export
+- **New Tool 08: Kanalen ballast** — dynamic ballast calculator for round and rectangular air ducts with automatic kg/m and total weight computation and CSV export
+- **Compact startup menu redesign** — tools are now shown as compact launch buttons in alphabetical order with automatic numbering (01–08) inside a scrollable list
+- **Kanalen ballast UX refinement** — when channel shape is set to `Rond`, the `Hoogte` field is auto-filled from `Maat`; `Maat` input cells are now explicitly rendered as white editable input fields
 
 ### v2026.3 (April 2026)
 - **New Tool 05: Warm Tapwater Circulation** — added a dedicated recirculation calculator based on ISSO formula 5.62 (without equivalent length), including row-based heat loss, circulation flow and total pressure loss
@@ -38,6 +44,8 @@ A comprehensive Windows desktop application for HVAC (Heating, Ventilation, and 
 - **Mixing Water Calculator (Scherm 4)** - Three-stream mixing point balancer; calculates any missing flow rate or temperature using energy and mass balance
 - **User Modules Calculator (Scherm 5)** - ISSO standard system modules 1–9 with visual diagrams; enter Φ and all temperatures to automatically derive all flow rates (qv1, qv2, qv5)
 - **Warm Tapwater Circulation (Tool 05)** - ISSO 5.62 recirculation heat-loss calculator with dynamic rows, automatic circulation flow sizing, line pressure loss, and high-speed warning highlight
+- **Leiding ballast (Tool 07)** - Compact dynamic ballast table for piping with material and diameter selection, weight-per-meter logic, totals, and CSV export
+- **Kanalen ballast (Tool 08)** - Ballast calculator for round and rectangular ducts with automatic weight lookup/estimation and CSV export
 - **Information Window** - Reference materials and calculation guidelines
 
 ### Pipe Material Database
@@ -128,6 +136,8 @@ HVAC Calculator/
 ├── MengwaterWindow.xaml/cs            # Scherm 4 – Mixing water calculator
 ├── GebruikersModulesWindow.xaml/cs    # Scherm 5 – ISSO user modules calculator
 ├── WarmTapwaterCirculatieWindow.xaml/cs # Tool 05 – Warm tapwater recirculation calculator
+├── LeidingballastWindow.xaml/cs        # Tool 07 – Pipe ballast calculator
+├── KanalenBallastWindow.xaml/cs        # Tool 08 – Duct ballast calculator
 ├── InfoWindow.xaml/cs                 # Reference information
 ├── SettingsWindow.xaml/cs             # Application settings
 ├── AppSettings.cs                     # Persisted user settings
