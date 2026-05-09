@@ -166,7 +166,7 @@ public partial class MengwaterWindow : Window
 
     private void btnInfo_Click(object sender, RoutedEventArgs e)
     {
-        InfoWindow info = new InfoWindow { Owner = this };
+        InfoWindow info = new InfoWindow("Berekenen de ontbrekende waarde van verschillende volumestromen of temperaturen.") { Owner = this };
         info.ShowDialog();
     }
 

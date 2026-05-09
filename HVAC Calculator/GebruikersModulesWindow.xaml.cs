@@ -271,7 +271,7 @@ public partial class GebruikersModulesWindow : Window
 
     private void btnInfo_Click(object sender, RoutedEventArgs e)
     {
-        InfoWindow info = new InfoWindow { Owner = this };
+        InfoWindow info = new InfoWindow("ISSO gebruikers modulen om debieten door te rekenen bij verschillende temperatuur trajecten.") { Owner = this };
         info.ShowDialog();
     }
 

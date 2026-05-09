@@ -108,7 +108,7 @@ public partial class TapwaterWindow : Window
 
     private void btnInfo_Click(object sender, RoutedEventArgs e)
     {
-        InfoWindow info = new InfoWindow { Owner = this };
+        InfoWindow info = new InfoWindow("Snelselectie van leidingdiameters van tapwater van verschillende leidingmaterialen, gefilterd op respectievelijke stroomsnelheden en leidingweerstanden") { Owner = this };
         info.ShowDialog();
     }
 

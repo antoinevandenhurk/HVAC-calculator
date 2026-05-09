@@ -518,7 +518,7 @@ public partial class WarmTapwaterCirculatieWindow : Window
 
     private void btnInfo_Click(object sender, RoutedEventArgs e)
     {
-        InfoWindow info = new InfoWindow { Owner = this };
+        InfoWindow info = new InfoWindow("Berekent het warmteverlies,  recirculatie volumestroom en drukverlies bij een bepaalde vertrektemperatuur") { Owner = this };
         info.ShowDialog();
     }
 

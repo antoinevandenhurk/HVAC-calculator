@@ -184,7 +184,7 @@ public partial class CVGKWWindow : Window
 
     private void btnInfo_Click(object sender, RoutedEventArgs e)
     {
-        InfoWindow info = new InfoWindow { Owner = this };
+        InfoWindow info = new InfoWindow("Bereken de onbrekende waarde van Waterzijdig vermogen, volumestromen of temperatuurtrajecten onafhankelijk van elkaar. De behorende leidingdiameters van het het gekozen leidingmateriaal worden getoond voor respectievelijke drukverliezen.") { Owner = this };
         info.ShowDialog();
     }
 
