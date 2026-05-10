@@ -7,9 +7,15 @@ A comprehensive Windows desktop application for HVAC (Heating, Ventilation, and 
 | Startup menu | Air Duct Calculator (Scherm 1) | User Modules Calculator (Scherm 5) |
 |:---:|:---:|:---:|
 | [![Startup menu](HVAC%20Calculator/Resources/Screenshot01.png)](HVAC%20Calculator/Resources/Screenshot01.png) | [![Air Duct Calculator](HVAC%20Calculator/Resources/Screenshot02.png)](HVAC%20Calculator/Resources/Screenshot02.png) | [![User Modules Calculator](HVAC%20Calculator/Resources/Screenshot03.png)](HVAC%20Calculator/Resources/Screenshot03.png) |
-| Select one of the eight tools | Calculate duct dimensions from flow rate, velocity and cross-section | Enter Φ and temperatures to derive all flow rates; transfer directly to pipe sizer |
+| Select one of the nine tools | Calculate duct dimensions from flow rate, velocity and cross-section | Enter Φ and temperatures to derive all flow rates; transfer directly to pipe sizer |
 
 ## Version History
+
+### v2026.5 (May 2026)
+- **New Tool 09: Warmteverlies/afgifte vuistregel** — row-based rule-of-thumb calculator for room heat loss and indicative floor heating/cooling output
+- **EN 1264-2 thermal model** — floor output is calculated with equivalent screed thickness and floor-covering resistance options (Steen, Tapijt, Linoleum, Parket)
+- **Compact workspace UI** — Tool 09 grid and summary area were tightened for a smaller window footprint while keeping keyboard-oriented row actions
+- **CSV export added** — Tool 09 now supports data export in the same CSV format style as ballast tools
 
 ### v2026.4 (May 2026)
 - **New Tool 07: Leiding ballast** — dynamic row-based ballast calculator for pipe systems with material and diameter selection, automatic per-row and total weight calculation, and CSV export
@@ -46,6 +52,7 @@ A comprehensive Windows desktop application for HVAC (Heating, Ventilation, and 
 - **Warm Tapwater Circulation (Tool 05)** - ISSO 5.62 recirculation heat-loss calculator with dynamic rows, automatic circulation flow sizing, line pressure loss, and high-speed warning highlight
 - **Leiding ballast (Tool 07)** - Compact dynamic ballast table for piping with material and diameter selection, weight-per-meter logic, totals, and CSV export
 - **Kanalen ballast (Tool 08)** - Ballast calculator for round and rectangular ducts with automatic weight lookup/estimation and CSV export
+- **Warmteverlies/afgifte vuistregel (Tool 09)** - Rule-of-thumb room heat-loss calculator with EN 1264-2 based floor heating/cooling output, condensation check and CSV export
 - **Information Window** - Reference materials and calculation guidelines
 
 ### Pipe Material Database
@@ -138,6 +145,7 @@ HVAC Calculator/
 ├── WarmTapwaterCirculatieWindow.xaml/cs # Tool 05 – Warm tapwater recirculation calculator
 ├── LeidingballastWindow.xaml/cs        # Tool 07 – Pipe ballast calculator
 ├── KanalenBallastWindow.xaml/cs        # Tool 08 – Duct ballast calculator
+├── WarmteverliesAfgifteVuistregelWindow.xaml/cs # Tool 09 – Warmteverlies/afgifte vuistregel
 ├── InfoWindow.xaml/cs                 # Reference information
 ├── SettingsWindow.xaml/cs             # Application settings
 ├── AppSettings.cs                     # Persisted user settings

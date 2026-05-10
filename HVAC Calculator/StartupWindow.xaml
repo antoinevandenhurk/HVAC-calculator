@@ -96,6 +96,7 @@
                         <Button Content="06. Mengwater calculator" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartMengwater_Click"/>
                         <Button Content="07. Tapwater buis calculator" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartTapwater_Click"/>
                         <Button Content="08. Warm tapwater circulatie" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartWarmTapwaterCirculatie_Click"/>
+                        <Button Content="09. Warmteverlies/afgifte vuistregel" Style="{StaticResource ToolLaunchButtonStyle}" Click="btnStartWarmteverliesAfgifteVuistregel_Click"/>
                     </StackPanel>
                 </ScrollViewer>
             </Border>

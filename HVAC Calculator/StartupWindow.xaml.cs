@@ -77,5 +77,12 @@ public partial class StartupWindow : Window
         win.Owner = this;
         win.Show();
     }
+
+    private void btnStartWarmteverliesAfgifteVuistregel_Click(object sender, RoutedEventArgs e)
+    {
+        var win = new WarmteverliesAfgifteVuistregelWindow();
+        win.Owner = this;
+        win.Show();
+    }
 }
 

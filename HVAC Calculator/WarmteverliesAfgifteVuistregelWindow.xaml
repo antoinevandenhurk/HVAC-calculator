@@ -1,0 +1,228 @@
+﻿<Window x:Class="HVACCalculator.WarmteverliesAfgifteVuistregelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Source={x:Static Application.Current}, Path=Resources[AppVersion], StringFormat=Warmteverlies/afgifte vuistregel - Versie {0}}"
+        SizeToContent="WidthAndHeight"
+        Background="#FF002262"
+        WindowStartupLocation="Manual"
+        ResizeMode="CanMinimize"
+        Topmost="True"
+        Icon="/Resources/VA.ico">
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="HeaderStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5,20,5,2"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Background" Value="#FF0264C9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="MinWidth" Value="100"/>
+        </Style>
+        <Style x:Key="RowActionButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="#FF1D8BF0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF0264C9"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="MinWidth" Value="24"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="MinWidth" Value="180"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" Width="Auto">
+            <TextBlock Text="Warmteverlies/afgifte vuistregel" Style="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Margin="0,0,0,12"/>
+
+            <Expander Header="Isolatie nivo gebouw" Margin="0,0,0,8" Foreground="White" HorizontalAlignment="Stretch" IsExpanded="True">
+                <StackPanel Margin="8,4,8,6">
+                    <ComboBox x:Name="cbIsolatieNivo" SelectionChanged="cbIsolatieNivo_SelectionChanged" SelectedIndex="1">
+                        <ComboBoxItem Content="Slecht geisoleerd (voor 1975, weinig verbeterd) - 90 W/m2"/>
+                        <ComboBoxItem Content="Redelijk geisoleerd (jaren 80-90, dubbel glas) - 60 W/m2"/>
+                        <ComboBoxItem Content="Goed geisoleerd (na 2000, HR++ glas, spouw, dakisolatie) - 40 W/m2"/>
+                        <ComboBoxItem Content="Zeer goed / bijna energieneutraal - 25 W/m2"/>
+                    </ComboBox>
+                </StackPanel>
+            </Expander>
+
+            <TextBlock Text="Vuistregel warmteverlies: Warmteverlies [W] = Oppervlak [m2] x gebouwfactor [W/m2]" Style="{StaticResource LabelStyle}" Margin="0,2,0,4" FontSize="13" TextWrapping="Wrap" MaxWidth="980"/>
+            <TextBlock Text="Afgifteberekening vloer (EN 1264-2): R_eff = (Vd_equiv/lambda_screed) + Rc_afwerking + R_opp | Vd_equiv = Vd + s/(2pi)*ln(s/(pi*d))" Style="{StaticResource LabelStyle}" Margin="0,0,0,6" FontSize="12" TextWrapping="Wrap" MaxWidth="980"/>
+
+            <DataGrid x:Name="vuistregelGrid"
+                      ItemsSource="{Binding RuleRows}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      RowHeaderWidth="0"
+                      Background="#FF001A4D"
+                      RowBackground="#FF001A4D"
+                      AlternatingRowBackground="#FF002262"
+                      Foreground="White"
+                      BorderBrush="#FF0264C9"
+                      BorderThickness="1"
+                      HorizontalScrollBarVisibility="Auto"
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False"
+                      CanUserSortColumns="False"
+                      Margin="0,2,0,8"
+                      Height="320"
+                      TabIndex="1"
+                      KeyboardNavigation.TabNavigation="Local">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#FF0264C9"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="3,2"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="2,1"/>
+                        <Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nr" Binding="{Binding RowNumber}" Width="44" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="L [m]" Binding="{Binding LengthM, UpdateSourceTrigger=PropertyChanged}" Width="52"/>
+                    <DataGridTextColumn Header="B [m]" Binding="{Binding WidthM, UpdateSourceTrigger=PropertyChanged}" Width="52"/>
+                    <DataGridTextColumn Header="Verlies [W]" Binding="{Binding HeatLossW}" Width="74" IsReadOnly="True"/>
+
+                    <DataGridTextColumn Header="Ta" Binding="{Binding SupplyTempC, UpdateSourceTrigger=PropertyChanged}" Width="48"/>
+                    <DataGridTextColumn Header="Tr" Binding="{Binding ReturnTempC, UpdateSourceTrigger=PropertyChanged}" Width="48"/>
+                    <DataGridTextColumn Header="Tv" Binding="{Binding RoomTempC, UpdateSourceTrigger=PropertyChanged}" Width="48"/>
+                    <DataGridTextColumn Header="s" Binding="{Binding SpacingMm, UpdateSourceTrigger=PropertyChanged}" Width="54"/>
+                    <DataGridTextColumn Header="d" Binding="{Binding DiameterMm, UpdateSourceTrigger=PropertyChanged}" Width="54"/>
+                    <DataGridTemplateColumn Header="Afw" Width="78">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding DataContext.FloorCoveringOptions, RelativeSource={RelativeSource AncestorType=Window}}"
+                                          SelectedItem="{Binding FloorCoveringType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          MinWidth="70" Height="22" Margin="1"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Vd" Binding="{Binding ScreedThicknessMm, UpdateSourceTrigger=PropertyChanged}" Width="54"/>
+                    <DataGridTextColumn Header="Id" Binding="{Binding InsulationThicknessMm, UpdateSourceTrigger=PropertyChanged}" Width="54"/>
+
+                    <DataGridTextColumn Header="Wa" Binding="{Binding HeatingOutputWm2}" Width="62" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Wt" Binding="{Binding HeatingOutputTotalW}" Width="62" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Ka" Binding="{Binding CoolingOutputWm2}" Width="62" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Kt" Binding="{Binding CoolingOutputTotalW}" Width="62" IsReadOnly="True"/>
+
+                    <DataGridTemplateColumn Header="+" Width="28">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="+" Style="{StaticResource RowActionButtonStyle}" Click="AddRow_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="-" Width="28">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="-" Style="{StaticResource RowActionButtonStyle}" Click="RemoveRow_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Margin="0,3,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="24"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Opp. totaal" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbTotalArea" IsReadOnly="True" Background="#FF333333" Foreground="White" Width="110"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="m2" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="Verlies totaal" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="0" Grid.Column="4" x:Name="tbTotalHeatLoss" IsReadOnly="True" Background="#FF333333" Foreground="White" Width="110"/>
+                <TextBlock Grid.Row="0" Grid.Column="5" Text="W" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="6" Text="Afgifte Wt" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="0" Grid.Column="7" x:Name="tbTotalHeatingOutput" IsReadOnly="True" Background="#FF333333" Foreground="White" Width="110"/>
+                <TextBlock Grid.Row="0" Grid.Column="8" Text="W" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="RV" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbRelativeHumidity" Text="60" Width="110"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="%" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="3" Text="Marge" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="1" Grid.Column="4" x:Name="tbSafetyMargin" Text="1.5" Width="110"/>
+                <TextBlock Grid.Row="1" Grid.Column="5" Text="C" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="6" Text="Afgifte Kt" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="1" Grid.Column="7" x:Name="tbTotalCoolingOutput" IsReadOnly="True" Background="#FF333333" Foreground="White" Width="110"/>
+                <TextBlock Grid.Row="1" Grid.Column="8" Text="W" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Tv koelen" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbCoolingRoomTemp" Text="25" Width="110"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="C" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="3" Text="Ta koelen" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="2" Grid.Column="4" x:Name="tbCoolingSupplyTemp" Text="18" Width="110"/>
+                <TextBlock Grid.Row="2" Grid.Column="5" Text="C" Style="{StaticResource LabelStyle}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="6" Text="Tr koelen" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="2" Grid.Column="7" x:Name="tbCoolingReturnTemp" Text="21" Width="110"/>
+                <TextBlock Grid.Row="2" Grid.Column="8" Text="C" Style="{StaticResource LabelStyle}"/>
+            </Grid>
+
+            <TextBlock x:Name="tbCondensationSummary" Style="{StaticResource LabelStyle}" Foreground="#FFFF1A1A" Margin="0,8,0,0" FontWeight="Bold"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,0,0,0">
+            <Button Content="Wissen" Click="btnWissen_Click" Margin="5,2"/>
+            <Button Content="Afsluiten" Click="btnAfsluiten_Click" Margin="5,2"/>
+            <Button Content="Info" Click="btnInfo_Click" Margin="5,2"/>
+            <Button Content="Export" Click="btnExport_Click" Margin="5,2"/>
+        </StackPanel>
+    </Grid>
+</Window>
